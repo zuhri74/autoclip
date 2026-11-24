@@ -18,12 +18,13 @@ Proses berjalan di server Google memakai akun Google Anda sendiri. Laptop tidak 
 
 1. Klik tombol **Open in Colab** di atas, lalu login dengan akun Google.
 2. Menu **Runtime → Ubah jenis runtime → GPU T4 → Simpan**.
-3. Klik ▶ di kotak **1** (izinkan akses Google Drive), lalu isi link video di kotak **2** dan klik ▶.
-4. Hasil tersimpan di **Google Drive → My Drive/AutoClip/hasil**. Kotak **3** menampilkan judul & thumbnail.
+3. Isi link video di kotak **Buat klip**, lalu klik ▶ di kirinya.
+4. Tunggu sampai selesai – hasil (video, thumbnail, judul & deskripsi) **otomatis terunduh sebagai ZIP**. Tidak perlu Google Drive.
 
 **Tips:**
-- Video dari laptop/HP: upload ke **My Drive/AutoClip/video**, lalu tulis nama filenya.
-- YouTube menolak unduhan dari server Google? Upload videonya ke Drive, atau simpan file `cookies.txt` YouTube di **My Drive/AutoClip/**. File ini berisi data login Anda – jangan dibagikan.
+- Video dari laptop/HP: centang **VIDEO_DARI_PERANGKAT**, lalu pilih filenya.
+- YouTube menolak unduhan dari server Google? Pakai VIDEO_DARI_PERANGKAT, atau centang **PAKAI_COOKIES** lalu pilih file `cookies.txt` YouTube Anda. File ini berisi data login Anda – jangan dibagikan.
+- Ingin hasil juga tersimpan di Google Drive? Centang **SIMPAN_KE_GOOGLE_DRIVE** (perlu ruang kosong).
 - Colab gratis punya batas waktu per sesi; GPU kadang tidak tersedia saat ramai.
 
 ## 💻 Cara 2 – Di komputer sendiri (Windows)
