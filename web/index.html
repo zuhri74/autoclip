@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AutoClip Studio</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%236d5efc'/><path d='M12 9l12 7-12 7z' fill='white'/></svg>">
+<link rel="stylesheet" href="/static/app.css">
+</head>
+<body>
+<div class="app">
+  <aside class="side">
+    <div class="brand">
+      <div class="logo"><svg viewBox="0 0 24 24"><path d="M8 5l11 7-11 7z"/></svg></div>
+      <div><b>AutoClip</b><small>Studio</small></div>
+    </div>
+    <nav id="nav">
+      <a data-page="buat" class="on"><i>✂️</i><span>Buat Klip</span></a>
+      <a data-page="hasil"><i>🎬</i><span>Hasil Saya</span></a>
+      <a data-page="campaign"><i>🎯</i><span>Campaign</span></a>
+      <a data-page="viral"><i>🔥</i><span>Cari Video Viral</span></a>
+      <a data-page="pengaturan"><i>⚙️</i><span>Pengaturan</span></a>
+    </nav>
+    <div class="jobpill hide" id="jobpill">
+      <div class="spin"></div>
+      <div><b id="jp-title">Memproses...</b><small id="jp-pct">0%</small></div>
+    </div>
+    <div class="side-foot" id="hwinfo"></div>
+  </aside>
+
+  <main id="main">
+
+    <!-- ============================== BUAT KLIP -->
+    <section class="page" id="page-buat">
+      <header class="ph">
+        <h1>Buat klip viral</h1>
+        <p>Tempel link video panjang, pilih jenis kontennya, lalu klik <b>Buat Klip</b>. Sisanya otomatis.</p>
+      </header>
+
+      <div class="grid2">
+        <div class="col">
+          <div class="card step">
+            <div class="sn">1</div>
+            <div class="sb">
+              <h3>Video sumber</h3>
+              <p class="muted">Link YouTube / TikTok / Twitch, atau file video di komputer. Satu per baris.</p>
+              <textarea id="sources" rows="4" placeholder="https://www.youtube.com/watch?v=..."></textarea>
+              <div class="row gap">
+                <button class="btn ghost" id="btn-pickvid">📁 Pilih file video</button>
+                <span class="muted small" id="src-count"></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="card step">
+            <div class="sn">2</div>
+            <div class="sb">
+              <h3>Jenis konten</h3>
+              <p class="muted">Menentukan cara kamera membingkai video &amp; gaya editnya.</p>
+              <div class="genres" id="genres"></div>
+              <button class="link small" id="more-genres">Tampilkan semua jenis ▾</button>
+              <h4>Momen yang dicari</h4>
+              <div class="seg" id="focus"></div>
+            </div>
+          </div>
+
+          <div class="card step">
+            <div class="sn">3</div>
+            <div class="sb">
+              <h3>Jumlah &amp; durasi</h3>
+              <div class="row gap wrap">
+                <label class="field"><span>Jumlah klip</span>
+                  <div class="stepper"><button data-d="-1">−</button><input id="n_clips" type="number" min="1" max="30" value="5"><button data-d="1">+</button></div>
+                </label>
+                <label class="field grow"><span>Durasi tiap klip: <b id="dur-lbl">60 detik</b></span>
+                  <input id="duration" type="range" min="15" max="180" step="5" value="60">
+                </label>
+              </div>
+              <label class="field"><span>Campaign clipper <em class="muted">(opsional)</em></span>
+                <select id="campaign"></select>
+              </label>
+              <div class="camp-mini hide" id="camp-mini"></div>
+            </div>
+          </div>
+
+          <div class="cta-bar">
+            <button class="btn primary big" id="btn-start">✨ Buat Klip Sekarang</button>
+            <span class="muted small" id="quick-summary"></span>
+          </div>
+        </div>
+
+        <div class="col">
+          <div class="card" id="progress-card">
+            <div class="empty-state" id="prog-idle">
+              <div class="big-ico">🎞️</div>
+              <h3>Siap membuat klip</h3>
+              <p class="muted">Proses berjalan di komputer ini. Video panjang (1–3 jam) butuh beberapa menit.</p>
+              <ol class="how">
+                <li><b>Unduh &amp; dengarkan</b> – AI mentranskrip seluruh ucapan</li>
+                <li><b>Pilih momen</b> – reaksi, tawa, aksi &amp; kalimat paling menarik</li>
+                <li><b>Edit otomatis</b> – bingkai 9:16, subtitle, logo, intro &amp; outro</li>
+                <li><b>Siap upload</b> – judul, deskripsi, tag &amp; thumbnail</li>
+              </ol>
+            </div>
+            <div class="hide" id="prog-run">
+              <div class="row between"><h3 id="prog-title">Memproses…</h3><span class="muted" id="prog-time"></span></div>
+              <div class="bar"><div id="prog-bar"></div></div>
+              <div class="row between"><span id="prog-stage" class="stage"></span><b id="prog-pct">0%</b></div>
+              <div class="loglast" id="prog-last"></div>
+              <div class="row gap">
+                <button class="btn danger ghost" id="btn-cancel">Batalkan</button>
+                <button class="link small" id="toggle-log">Lihat detail proses ▾</button>
+              </div>
+              <pre class="log hide" id="log"></pre>
+            </div>
+            <div class="hide" id="prog-done"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================== HASIL -->
+    <section class="page hide" id="page-hasil">
+      <header class="ph row between">
+        <div><h1>Hasil saya</h1><p>Semua klip yang sudah dibuat. Klik untuk menonton, menyalin judul &amp; deskripsi.</p></div>
+        <button class="btn ghost" id="btn-refresh-hasil">↻ Muat ulang</button>
+      </header>
+      <div id="hasil-list" class="cards"></div>
+      <div id="hasil-detail" class="hide"></div>
+    </section>
+
+    <!-- ============================== CAMPAIGN -->
+    <section class="page hide" id="page-campaign">
+      <header class="ph row between">
+        <div><h1>Campaign clipper</h1><p>Upload brief (PDF / foto). AutoClip membaca aturan, logo, hashtag, CTA &amp; mencari video sumbernya.</p></div>
+        <button class="btn primary" id="btn-brief">📄 Upload brief</button>
+      </header>
+      <div id="camp-list" class="cards"></div>
+      <div id="camp-detail" class="hide"></div>
+    </section>
+
+    <!-- ============================== VIRAL -->
+    <section class="page hide" id="page-viral">
+      <header class="ph"><h1>Cari video viral</h1><p>Video panjang yang sedang ramai ditonton – cocok untuk dipotong jadi klip.</p></header>
+      <div class="card row gap wrap filters">
+        <label class="field"><span>Negara</span><select id="v-country"></select></label>
+        <label class="field"><span>Kategori</span><select id="v-cat"></select></label>
+        <label class="field"><span>Periode</span><select id="v-period"></select></label>
+        <button class="btn primary" id="btn-viral">🔎 Cari</button>
+      </div>
+      <div id="viral-list" class="vlist"></div>
+    </section>
+
+    <!-- ============================== PENGATURAN -->
+    <section class="page hide" id="page-pengaturan">
+      <header class="ph row between">
+        <div><h1>Pengaturan</h1><p>Diatur sekali, dipakai untuk semua klip. Bawaan sudah optimal – ubah hanya bila perlu.</p></div>
+        <button class="btn primary" id="btn-save">💾 Simpan</button>
+      </header>
+      <div class="tabs" id="set-tabs">
+        <button data-t="merek" class="on">Merek &amp; akun</button>
+        <button data-t="tampilan">Tampilan video</button>
+        <button data-t="ai">AI &amp; kualitas</button>
+        <button data-t="koreksi">Koreksi kata</button>
+      </div>
+      <div class="card settings" id="set-merek">
+        <div class="form">
+          <label class="field"><span>Nama akun (watermark)</span><input id="s-handle" placeholder="@akunmu"></label>
+          <label class="field"><span>Logo watermark (PNG transparan)</span>
+            <div class="row gap"><input id="s-logo" placeholder="(tanpa logo)"><button class="btn ghost" data-pick="logo" data-to="s-logo">Pilih…</button></div></label>
+          <label class="field"><span>Posisi logo</span><select id="s-logo_pos"></select></label>
+          <label class="field"><span>Ajakan di akhir video (CTA)</span><input id="s-cta"></label>
+          <label class="check"><input type="checkbox" id="s-intro"> Kartu pembuka &amp; penutup (dengan suara AI)</label>
+          <label class="field"><span>Suara AI</span><select id="s-voice"></select></label>
+          <label class="field"><span>Logo besar di awal / akhir video</span><select id="s-brand"></select></label>
+        </div>
+      </div>
+      <div class="card settings hide" id="set-tampilan">
+        <div class="form">
+          <label class="field"><span>Format video</span><select id="s-fmt"></select></label>
+          <label class="field"><span>Gaya tampilan</span><select id="s-look"></select></label>
+          <label class="field"><span>Warna kata subtitle</span><select id="s-text_color"></select></label>
+          <label class="field"><span>Posisi wajah streamer (game)</span><select id="s-cam_pos"><option value="bawah">Bawah</option><option value="atas">Atas</option></select></label>
+          <label class="check"><input type="checkbox" id="s-subtitles"> Subtitle otomatis</label>
+          <label class="check"><input type="checkbox" id="s-jumpcut"> Potong bagian diam (jump cut)</label>
+          <label class="check"><input type="checkbox" id="s-meme_sfx"> Efek suara meme</label>
+          <label class="check"><input type="checkbox" id="s-top_text"> Teks judul di atas video</label>
+          <label class="check"><input type="checkbox" id="s-compile"> Gabungkan klip terbaik dari banyak video jadi 1 kompilasi</label>
+        </div>
+      </div>
+      <div class="card settings hide" id="set-ai">
+        <div class="form">
+          <label class="field"><span>Bahasa video</span><select id="s-language"><option value="id">Indonesia</option><option value="en">English</option><option value="auto">Deteksi otomatis</option></select></label>
+          <label class="field"><span>Pemilih momen</span><select id="s-ai"></select></label>
+          <label class="field"><span>API key Claude <em class="muted" id="key-state"></em></span><input id="s-api_key" type="password" placeholder="sk-ant-…  (kosongkan = tetap)"></label>
+          <label class="check"><input type="checkbox" id="s-ai_thumb"> Thumbnail &amp; cover dibuat AI (Google Gemini)</label>
+          <label class="field"><span>API key Google Gemini <em class="muted" id="gkey-state"></em></span><input id="s-gemini_key" type="password" placeholder="AIza…  (kosongkan = tetap)">
+            <small class="muted">Gratis/murah dari <b>aistudio.google.com → Get API key</b>. Tanpa key, thumbnail dibuat desain lokal.</small></label>
+          <label class="field"><span>Kecepatan komputer</span><select id="s-profile"></select></label>
+          <label class="field"><span>Model subtitle</span><select id="s-sub_model"></select></label>
+          <label class="field"><span>Seleksi momen</span><select id="s-strict"></select></label>
+          <label class="field"><span>Judul &amp; deskripsi bahasa lain</span><select id="s-desc_langs"></select></label>
+          <label class="field"><span>Folder hasil <em class="muted">(kosong = D:\AutoClip\hasil)</em></span>
+            <div class="row gap"><input id="s-out_dir"><button class="btn ghost" data-pick="folder" data-to="s-out_dir">Pilih…</button></div></label>
+          <label class="field"><span>Cookies browser (video yang perlu login)</span><select id="s-cookies"><option value="">Tanpa</option><option>chrome</option><option>edge</option><option>firefox</option></select></label>
+        </div>
+      </div>
+      <div class="card settings hide" id="set-koreksi">
+        <p class="muted">Kata yang sering salah dengar oleh AI subtitle. Satu per baris: <code>salah = benar</code>. Berlaku untuk subtitle, judul &amp; deskripsi.</p>
+        <textarea id="fix-text" rows="14" spellcheck="false"></textarea>
+        <div class="row gap"><button class="btn primary" id="btn-fix">Simpan koreksi</button><span class="muted small" id="fix-msg"></span></div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<div class="toast" id="toast"></div>
+<div class="modal hide" id="modal"><div class="mbox"><button class="x" id="mclose">×</button><div id="mbody"></div></div></div>
+<script src="/static/app.js"></script>
+</body>
+</html>

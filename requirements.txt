@@ -1,0 +1,14 @@
+numpy
+pillow
+opencv-python
+faster-whisper
+yt-dlp[default]
+deno
+edge-tts
+anthropic
+pymupdf
+rapidocr_onnxruntime
+onnxruntime
+imageio-ffmpeg
+tokenizers
+huggingface_hub

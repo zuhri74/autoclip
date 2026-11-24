@@ -1,0 +1,19 @@
+# data pribadi & hasil - jangan diunggah
+web_settings.json
+autoclip_config.json
+cookies.txt
+campaign/
+hasil/
+unduhan/
+video/
+_hf/
+_cache/
+_models/
+_sfx/
+_stiker/
+_ffmpeg/
+facecam_profil.json
+koreksi_kata.txt
+__pycache__/
+*.pyc
+Unggah ke GitHub.bat
