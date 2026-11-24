@@ -17,7 +17,7 @@ Proses berjalan di server Google memakai akun Google Anda sendiri. Laptop tidak 
 [![Buka di Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/zuhri74/autoclip/blob/main/AutoClip_Colab.ipynb)
 
 1. Klik tombol **Open in Colab** di atas, lalu login dengan akun Google.
-2. Menu **Runtime → Ubah jenis runtime → GPU T4 → Simpan**.
+2. *(Opsional, agar lebih cepat)* Menu **Runtime → Ubah jenis runtime → T4 GPU → Simpan**. Tidak bisa dipilih? Lewati saja – tetap jalan, hanya lebih lambat.
 3. Isi link video di kotak **Buat klip**, lalu klik ▶ di kirinya.
 4. Tunggu sampai selesai – hasil (video, thumbnail, judul & deskripsi) **otomatis terunduh sebagai ZIP**. Tidak perlu Google Drive.
 
